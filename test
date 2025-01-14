@@ -28,5 +28,5 @@ bandit --quiet --recursive . --configfile pyproject.toml    && PASSED   || exit 
 #
 # --no-migrations -- Don't apply Django migrations, instead inspect the models to create the test database
 # See: https://pytest-django.readthedocs.io/en/latest/database.html#no-migrations-disable-django-migrations
-# coverage run -m pytest -vv --capture no --trace-config --no-migrations
-# coverage report
+coverage run -m pytest -vv --capture no --trace-config --no-migrations
+coverage report

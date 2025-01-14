@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+python -m pip uninstall --yes mneia_exporter
+
 rm dist/*
 
 python -m build
