@@ -1,3 +1,4 @@
 setuptools
 build
 mneia_backend
+termcolor

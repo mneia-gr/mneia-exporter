@@ -7,11 +7,19 @@ from mneia_exporter.models.area_type import AreaType
 
 
 @mock.patch.object(Path, "home")
-def test_area_type_export_path(mock_path_home):
+def test_area_type_export_dir(mock_path_home):
     mock_path_home.return_value = Path("/foo/bar/")
 
     area_type = AreaType(id="0c543ef3-942c-4a8f-8809-2c96b9ecef2d")
-    assert area_type.export_path == Path(
+    assert area_type.export_dir == Path("/foo/bar/Mneia/mneia-data/area-types/")
+
+
+@mock.patch.object(Path, "home")
+def test_area_type_export_file(mock_path_home):
+    mock_path_home.return_value = Path("/foo/bar/")
+
+    area_type = AreaType(id="0c543ef3-942c-4a8f-8809-2c96b9ecef2d")
+    assert area_type.export_file == Path(
         "/foo/bar/Mneia/mneia-data/area-types/0c543ef3-942c-4a8f-8809-2c96b9ecef2d.json"
     )
 
