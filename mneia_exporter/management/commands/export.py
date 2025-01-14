@@ -6,6 +6,11 @@ from mneia_exporter.apps import MneiaExporterConfig
 
 
 class Command(BaseCommand):
+    """
+    Lots of terminal printing stuff here, not very pretty. Unicode characters taken from:
+    https://j2r2b.github.io/2020/07/23/text-representation-of-trees.html
+    """
+
     help = "Exports Mneia data"
 
     def handle(self, *args, **options):
