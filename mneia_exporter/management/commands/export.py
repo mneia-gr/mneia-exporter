@@ -1,7 +1,25 @@
 from django.apps import apps
 from django.core.management.base import BaseCommand
 from mneia_backend.apps import MneiaBackendConfig
+from mneia_exporter.apps import MneiaExporterConfig
 from termcolor import cprint
+
+
+def export_docs():
+    """
+    Exports some data from the MusicBrainz database to the Sphinx documentation of the Django MusicBrainz Connector.
+    """
+
+    models = list(apps.get_app_config(MneiaExporterConfig.name).get_models())
+    models = [model for model in models if model.__name__.startswith("MusicBrainz")]
+    for model_index, model in enumerate(models):
+        if model_index + 1 == len(models):  # last model in the list
+            cprint("\u2514", "blue", attrs=["bold"], end="")
+        else:
+            cprint("\u251c", "blue", attrs=["bold"], end="")
+        cprint("\u2500\u2500 Model: ", "blue", attrs=["bold"], end="")
+        print(f"{model.__name__} ({model_index+1}/{len(models)})")
+        model.exporter.export_docs()
 
 
 def export_json():
@@ -39,3 +57,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         cprint("MNEIA EXPORTER -> JSON", "blue", attrs=["bold"])
         export_json()
+
+        cprint("MNEIA EXPORTER -> DOCS", "blue", attrs=["bold"])
+        export_docs()
