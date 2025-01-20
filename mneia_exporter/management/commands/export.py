@@ -1,8 +1,9 @@
 from django.apps import apps
 from django.core.management.base import BaseCommand
 from mneia_backend.apps import MneiaBackendConfig
-from mneia_exporter.apps import MneiaExporterConfig
 from termcolor import cprint
+
+from mneia_exporter.apps import MneiaExporterConfig
 
 
 def export_docs():
