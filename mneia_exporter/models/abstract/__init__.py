@@ -29,13 +29,17 @@ class ExportableManager(models.Manager):
         docs_template_file = self._get_docs_export_template_file()
         docs_template = template.loader.get_template(docs_template_file)
 
+        instances = self.all().order_by("id")
+        if hasattr(self.model, "LIMIT_INSTANCES"):
+            instances = instances[:self.model.LIMIT_INSTANCES]
+
         docs_export_file = self._get_docs_export_file()
         docs_export_file.write_text(
             docs_template.render(
                 {
                     "today": datetime.datetime.now().strftime("%Y-%m-%d"),
                     "num_instances": self.count(),
-                    "instances": self.all().order_by("id"),
+                    "instances": instances,
                 }
             )
         )
@@ -46,6 +50,14 @@ class Exportable(models.Model):
     Abstract model that adds export functionality to models. This is meant to be used as a mix-in class.
     """
 
+    exporter = ExportableManager()
+
+    class Meta:
+        abstract = True
+
+
+class SampleExportable(models.Model):
+    LIMIT_INSTANCES: int = 20
     exporter = ExportableManager()
 
     class Meta:
