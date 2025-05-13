@@ -31,7 +31,7 @@ class ExportableManager(models.Manager):
 
         instances = self.all().order_by("id")
         if hasattr(self.model, "LIMIT_INSTANCES"):
-            instances = instances[:self.model.LIMIT_INSTANCES]
+            instances = instances[: self.model.LIMIT_INSTANCES]
 
         docs_export_file = self._get_docs_export_file()
         docs_export_file.write_text(
